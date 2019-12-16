@@ -1,0 +1,21 @@
+Package: GetMarvel
+Type: Package
+Title: Access Marvel Information  
+Version: 0.1.0
+Author: Mengran Xia
+Author@R: person("Mengran", "Xia", email = "mx2205@columbia.edu",
+      role = c("aut", "cre"))
+Description: This package allows user to access all available Marvel characters and retrieve personal data of each character
+    Examples include: Basic bio information of the character, Number of Comics/Stories/Events availbale for that character, and Compare basic info across up to 3 characters. 
+License: MIT + file LICENSE
+Maintainer: Mengran Xia <mx2205@columbia.edu>
+Imports:
+    httr, rvest, rlist, dplyr, xml2, tidyr, purrr, stringr, jsonlite, digest
+URL: https://github.com/xiamxmr/Marvel_Package
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.0.2.9000
+Suggests: 
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr

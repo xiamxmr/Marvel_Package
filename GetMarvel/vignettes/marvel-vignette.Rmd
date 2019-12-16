@@ -1,0 +1,100 @@
+---
+title: "Marvel-vignette"
+author: "Mengran Xia"
+date: "`r Sys.Date()`"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Marvel-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## API_access Function
+
+This function marks the very first step of using the Marvel package. Users need to provide their own private and public key for Marvel API in order to gain access to the information of the rest of the functions in Marvel library. 
+
+```{r setup}
+library(GetMarvel)
+API_access()
+```
+
+## get_all_nameid Function
+
+This function allows users who does not have any set character name or id set in mind and wish to explore all the available characters on Marvel.com.
+
+The function loops through all the characters using limit and offset (meaning starting from which index of the character) and returns a dataframe that provides id, name and url (if the character has its own website link, if not, the function will return "Not Found") of all characters. 
+
+```{r}
+get_all_nameid()
+allnames <- get_all_nameid()
+```
+
+## basic_info_by_ID Function
+
+This function retrieves the most basic information of the inputed character. It provides the number of comics/series/stories/events available of that particular character. 
+
+```{r}
+basic_info_by_ID(allnames$id[1])
+```
+
+
+## marvel_char_compare Function
+
+This function is a more advanced function of basic_info_by_ID() Function. It allows user to retrieve the basic information of number of comics/series/stories/events available to up to 3 characters and easily compare. 
+
+Note, the third character is optional. To succesfully run this function, user needs to input at least 2 and at most 3 character names. 
+
+```{r}
+marvel_char_compare(allnames$name[1],allnames$name[2],allnames$name[3])
+```
+
+## get_character_bio Function
+
+This function allows user to gain access to biogrophy related information that's listed on the Character url within Marvel.com. It can only retrieve biography if the character already has its own website on Marvel.com. This can be assessed through get_all_nameid(), whereas the column "url" Information includes height, weight, eye color and hair color etc. 
+
+Unlike other functions that use `httr` package to content(GET(url)), this function `rvest` and `xml2` packages to inspect css selectors on a given webpage and retrieve information. 
+
+```{r}
+get_character_bio(allnames,123)
+```
+
+## get_event Function
+
+This function allows user to retrive up to 100 most recent events held by Marvel. The parameter input ranges from 0 to 100. The returned dataframe provides the name, description, start date and end date etc for that specific event. 
+
+```{r}
+get_event(10)
+```
+
+## search_character_comic Function
+
+This function takes basic_info_by_ID() Function to the next level by digging deeper of the comics information of a particular character. Rather than only listing the number of comics avaialble of the character, it returns all information of each comics. 
+
+```{r}
+search_character_comic(allnames, 123)
+```
+
+## search_character_events Function
+
+This function takes basic_info_by_ID() Function to the next level by digging deeper of the events information of a particular character. Rather than only listing the number of events avaialble of the character, it returns all information of each event. 
+
+```{r}
+search_character_events(allnames, 123)
+```
+
+
+## search_character_stories Function
+
+This function takes basic_info_by_ID() Function to the next level by digging deeper of the stories information of a particular character. Rather than only listing the number of stories avaialble of the character, it returns all information of each story. 
+
+```{r}
+search_character_stories(allnames,123)
+```
+
